@@ -1,0 +1,68 @@
+# create screen
+clear
+width = constant 20
+height = constant 10
+eval "┌" . repeat("─", width) . "┐"
+print
+
+line = eval "│" . repeat(" ", width) . "│"
+i = "0"
+while i < height+0
+    print line
+    i = eval i + 1
+
+eval "└" . repeat("─", width) . "┘"
+print
+
+while 1
+    print "Edit the board, or type @z to continue"
+    pause
+    norm "Gdd5G12yyP"
+
+    y_offset = constant 6
+    x_offset = constant 2
+    letter = "0"
+
+    y = "0"
+    char_y = eval y_offset + height + 2
+    while y < height
+        x = "0"
+        char_x = x_offset
+        while x < width
+            neighbours = "0"
+
+
+            letter = get_char_eval "((y - 1) + height) % height + y_offset" "((x - 1) + width) % width + x_offset"
+            neighbours = eval neighbours + (letter != " ")
+
+            letter = get_char_eval "((y - 1) + height) % height + y_offset" "(x + width) % width + x_offset"
+            neighbours = eval neighbours + (letter != " ")
+
+            letter = get_char_eval "((y - 1) + height) % height + y_offset" "((x + 1) + width) % width + x_offset"
+            neighbours = eval neighbours + (letter != " ")
+
+            letter = get_char_eval "(y + height) % height + y_offset" "((x - 1) + width) % width + x_offset"
+            neighbours = eval neighbours + (letter != " ")
+
+            letter = get_char_eval "(y + height) % height + y_offset" "((x + 1) + width) % width + x_offset"
+            neighbours = eval neighbours + (letter != " ")
+
+            letter = get_char_eval "((y + 1) + height) % height + y_offset" "((x - 1) + width) % width + x_offset"
+            neighbours = eval neighbours + (letter != " ")
+
+            letter = get_char_eval "((y + 1) + height) % height + y_offset" "((x + 1) + width) % width + x_offset"
+            neighbours = eval neighbours + (letter != " ")
+
+            letter = get_char_eval "((y + 1) + height) % height + y_offset" "(x + width) % width + x_offset"
+            neighbours = eval neighbours + (letter != " ")
+
+            letter = get_char_eval "(y + height) % height + y_offset" "(x + width) % width + x_offset"
+            neighbours = eval neighbours + (letter != " ")
+
+            sub_at_eval char_y char_x "neighbours == 3 ? 'x' : neighbours == 4 ? letter : ' '"
+                
+            char_x = inc char_x
+            x = inc x
+        char_y = inc char_y
+        y = inc y
+    norm "5G12dd"
